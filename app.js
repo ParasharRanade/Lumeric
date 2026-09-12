@@ -9,7 +9,41 @@
 
 // ==========================================================================
 // 1. TAXONOMY & PRESETS
-// ==========================================================================
+// Official Lumiere Subdomains
+const SUBDOMAINS = [
+  "Algorithms and Complexity",
+  "Artificial Intelligence (incl. supervised, unsupervised, and reinforcement learning; deep learning; NLP; computer vision; theoretical ML)",
+  "Computer Systems",
+  "Software Engineering",
+  "Machine Learning",
+  "Statistical Modeling",
+  "Data Engineering",
+  "Data Visualization",
+  "Signal Processing",
+  "Power Systems",
+  "Control Systems",
+  "Microelectronics",
+  "Civil Engineering",
+  "Mechanical Engineering"
+];
+
+// Mapping each subdomain to recommended primary discipline & subtype default
+const SUBDOMAIN_MAPPINGS = {
+  "Algorithms and Complexity": { discipline: "cs", subtype: "Algorithms & Complexity" },
+  "Artificial Intelligence (incl. supervised, unsupervised, and reinforcement learning; deep learning; NLP; computer vision; theoretical ML)": { discipline: "data_ai", subtype: "Artificial Intelligence & Machine Learning" },
+  "Computer Systems": { discipline: "cs", subtype: "Computer Systems Engineering" },
+  "Software Engineering": { discipline: "cs", subtype: "Software Engineering" },
+  "Machine Learning": { discipline: "data_ai", subtype: "Artificial Intelligence & Machine Learning" },
+  "Statistical Modeling": { discipline: "data_ai", subtype: "Statistical Modeling" },
+  "Data Engineering": { discipline: "data_ai", subtype: "Data Engineering" },
+  "Data Visualization": { discipline: "data_ai", subtype: "Data Visualization" },
+  "Signal Processing": { discipline: "electrical", subtype: "Signal Processing" },
+  "Power Systems": { discipline: "electrical", subtype: "Power & Energy Systems" },
+  "Control Systems": { discipline: "electrical", subtype: "Control Systems" },
+  "Microelectronics": { discipline: "electrical", subtype: "Electronics & Circuit Design" },
+  "Civil Engineering": { discipline: "civil", subtype: "Structural Analysis & Solid/Soil Mechanics" },
+  "Mechanical Engineering": { discipline: "mechanical", subtype: "Structural Analysis & Solid Mechanics" }
+};
 
 const TAXONOMY = {
   electrical: {
@@ -17,6 +51,7 @@ const TAXONOMY = {
     subtypes: [
       "Power & Energy Systems",
       "Electronics & Circuit Design",
+      "Microelectronics",
       "Control Systems",
       "Signal Processing",
       "Computer Systems Engineering"
@@ -53,6 +88,7 @@ const TAXONOMY = {
     name: "Data Analysis, Science & Engineering",
     subtypes: [
       "Artificial Intelligence & Machine Learning",
+      "Machine Learning",
       "Data Engineering",
       "Data Visualization",
       "Statistical Modeling"
@@ -460,7 +496,8 @@ const elements = {
   btnThemeToggle: document.getElementById('btnThemeToggle'),
   btnResetForm: document.getElementById('btnResetForm'),
 
-  // Taxonomy
+  // Taxonomy & Subdomain
+  subdomainSelect: document.getElementById('subdomainSelect'),
   disciplineSelect: document.getElementById('disciplineSelect'),
   subtypeSelect: document.getElementById('subtypeSelect'),
 
@@ -551,6 +588,7 @@ const elements = {
 
   renderedTaskContainer: document.getElementById('renderedTaskContainer'),
   cardTaskTitle: document.getElementById('cardTaskTitle'),
+  cardSubdomainBadge: document.getElementById('cardSubdomainBadge'),
   cardDisciplineBadge: document.getElementById('cardDisciplineBadge'),
   cardSubtypeBadge: document.getElementById('cardSubtypeBadge'),
   cardLicenseBadge: document.getElementById('cardLicenseBadge'),
@@ -684,6 +722,7 @@ function insertClosingSentence() {
 // ==========================================================================
 
 function compileLumiereMarkdown() {
+  const subdomainName = elements.subdomainSelect ? elements.subdomainSelect.value : 'Signal Processing';
   const disciplineName = TAXONOMY[elements.disciplineSelect.value]?.name || 'Engineering';
   const subtypeName = elements.subtypeSelect.value || 'General';
   const prompt = elements.taskPromptInput.value.trim() || '[No task prompt specified]';
@@ -718,6 +757,7 @@ function compileLumiereMarkdown() {
     : `**Image Reference:** None attached`;
 
   return `<!-- PROJECT LUMIÈRE ENGINEERING & CS BENCHMARK SPECIFICATION -->
+<!-- Subdomain: ${subdomainName} -->
 <!-- Discipline: ${disciplineName} | Subtype: ${subtypeName} -->
 
 ### 1. Task Prompt
@@ -780,6 +820,7 @@ function compileLumiereJSON() {
     version: "3.0-Lumiere",
     timestamp: new Date().toISOString(),
     taxonomy: {
+      subdomain: elements.subdomainSelect ? elements.subdomainSelect.value : '',
       discipline_id: elements.disciplineSelect.value,
       discipline_name: TAXONOMY[elements.disciplineSelect.value]?.name || '',
       subtype: elements.subtypeSelect.value
@@ -922,6 +963,9 @@ function updateUI() {
   }
 
   const disciplineName = TAXONOMY[elements.disciplineSelect.value]?.name || 'Engineering';
+  if (elements.cardSubdomainBadge && elements.subdomainSelect) {
+    elements.cardSubdomainBadge.textContent = elements.subdomainSelect.value;
+  }
   elements.cardDisciplineBadge.textContent = disciplineName;
   elements.cardSubtypeBadge.textContent = elements.subtypeSelect.value || 'Subtype';
 
@@ -1281,7 +1325,22 @@ function loadPreset(presetKey) {
   state.currentPreset = presetKey;
   state.images = preset.images ? [...preset.images] : [];
 
-  // Taxonomy
+  // Taxonomy & Subdomain
+  if (elements.subdomainSelect) {
+    if (preset.subdomain) {
+      elements.subdomainSelect.value = preset.subdomain;
+    } else if (presetKey === 'electrical_bode') {
+      elements.subdomainSelect.value = 'Signal Processing';
+    } else if (presetKey === 'mech_mohr') {
+      elements.subdomainSelect.value = 'Mechanical Engineering';
+    } else if (presetKey === 'cs_cache') {
+      elements.subdomainSelect.value = 'Computer Systems';
+    } else if (presetKey === 'civil_truss') {
+      elements.subdomainSelect.value = 'Civil Engineering';
+    } else if (presetKey === 'data_roc') {
+      elements.subdomainSelect.value = 'Machine Learning';
+    }
+  }
   elements.disciplineSelect.value = preset.discipline;
   populateSubtypes(preset.discipline, preset.subtype);
 
@@ -1666,6 +1725,19 @@ function showToast(msg, type = 'info') {
 // ==========================================================================
 
 function setupEventListeners() {
+  // Subdomain change dynamically suggests primary discipline and subtype
+  if (elements.subdomainSelect) {
+    elements.subdomainSelect.addEventListener('change', (e) => {
+      const selectedSub = e.target.value;
+      const mapping = SUBDOMAIN_MAPPINGS[selectedSub];
+      if (mapping) {
+        elements.disciplineSelect.value = mapping.discipline;
+        populateSubtypes(mapping.discipline, mapping.subtype);
+      }
+      updateUI();
+    });
+  }
+
   // Discipline change populates subtypes
   elements.disciplineSelect.addEventListener('change', () => {
     populateSubtypes(elements.disciplineSelect.value);

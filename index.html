@@ -72,7 +72,29 @@
             </div>
             <span class="badge-pill badge-primary">Lifecycle Step 2</span>
           </div>
-          <p class="section-desc">Select the primary engineering discipline and certified subtype per the Project Lumiere Engineering & CS Playbook.</p>
+          <p class="section-desc">Select the certified subdomain and discipline taxonomy per the Project Lumiere Engineering & CS benchmark specifications.</p>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label for="subdomainSelect" class="field-label-sm">
+              What is the subdomain of your task? <span class="req">*</span>
+            </label>
+            <select id="subdomainSelect" class="select-input">
+              <option value="Algorithms and Complexity">Algorithms and Complexity</option>
+              <option value="Artificial Intelligence (incl. supervised, unsupervised, and reinforcement learning; deep learning; NLP; computer vision; theoretical ML)">Artificial Intelligence (incl. supervised, unsupervised, and reinforcement learning; deep learning; NLP; computer vision; theoretical ML)</option>
+              <option value="Computer Systems">Computer Systems</option>
+              <option value="Software Engineering">Software Engineering</option>
+              <option value="Machine Learning">Machine Learning</option>
+              <option value="Statistical Modeling">Statistical Modeling</option>
+              <option value="Data Engineering">Data Engineering</option>
+              <option value="Data Visualization">Data Visualization</option>
+              <option value="Signal Processing" selected>Signal Processing</option>
+              <option value="Power Systems">Power Systems</option>
+              <option value="Control Systems">Control Systems</option>
+              <option value="Microelectronics">Microelectronics</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+            </select>
+          </div>
 
           <div class="grid-two taxonomy-grid">
             <div class="form-group">
@@ -86,7 +108,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="subtypeSelect" class="field-label-sm">Approved Subtype <span class="req">*</span></label>
+              <label for="subtypeSelect" class="field-label-sm">Approved Subtype / Focus Area <span class="req">*</span></label>
               <select id="subtypeSelect" class="select-input">
                 <!-- Dynamically populated from TAXONOMY in app.js -->
               </select>
@@ -718,8 +740,9 @@
                   <span class="lumiere-logo-tag">PROJECT LUMIÈRE BENCHMARK SPECIFICATION</span>
                   <h2 id="cardTaskTitle" class="card-title">Engineering Multimodal Task</h2>
                   <div class="taxonomy-badge-line">
-                    <span id="cardDisciplineBadge" class="badge-pill badge-primary">Electrical Engineering</span>
-                    <span id="cardSubtypeBadge" class="badge-pill badge-info">Electronics & Circuit Design</span>
+                    <span id="cardSubdomainBadge" class="badge-pill badge-primary">Signal Processing</span>
+                    <span id="cardDisciplineBadge" class="badge-pill badge-info">Electrical Engineering</span>
+                    <span id="cardSubtypeBadge" class="badge-pill badge-neutral">Electronics & Circuit Design</span>
                   </div>
                 </div>
                 <div class="task-card-meta">

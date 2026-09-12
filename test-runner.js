@@ -41,6 +41,7 @@ async function runTests() {
   console.log('2. Verifying Project Lumiere Engineering & CS input fields existence...');
   const fields = await page.evaluate(() => {
     return {
+      subdomainSelect: !!document.getElementById('subdomainSelect'),
       disciplineSelect: !!document.getElementById('disciplineSelect'),
       subtypeSelect: !!document.getElementById('subtypeSelect'),
       imageInput: !!document.getElementById('imageInput'),
