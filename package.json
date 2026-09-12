@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "push": "./auto-push.sh"
+    "push": "./auto-push.sh",
+    "watch": "./auto-sync-watch.sh"
   },
   "keywords": [],
   "author": "",
