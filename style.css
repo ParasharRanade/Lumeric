@@ -1303,8 +1303,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 10px;
   overflow: visible;
+  background: #ffffff;
+}
+
+[data-theme="light"] .card-figure-frame,
+.card-theme-light .card-figure-frame {
+  background: #ffffff;
+}
+
+.card-theme-dark .card-figure-frame {
+  background: #ffffff;
 }
 
 .card-figure-frame img {
@@ -1313,6 +1323,7 @@ body {
   height: auto;
   object-fit: contain;
   display: block;
+  border-radius: 4px;
 }
 
 .card-image-caption {

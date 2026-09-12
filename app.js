@@ -430,7 +430,7 @@ Step 7: Round to 3 significant figures: $F_1 = 0.810$.`,
 // Application State
 const state = {
   theme: 'dark',
-  cardTheme: 'dark', // Controls rendered image task card theme (dark / light)
+  cardTheme: 'light', // Controls rendered image task card theme (light / dark)
   activeTab: 'rendered',
   currentPreset: 'electrical_bode',
   images: [
