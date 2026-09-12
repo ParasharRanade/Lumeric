@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="900" height="420">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="bodeFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="phaseFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="900" height="420" fill="url(#bgGrad)" rx="10" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- PANEL A: Bode Magnitude -->
+  <g transform="translate(25, 20)">
+    <rect width="410" height="375" fill="#040813" rx="8" stroke="#1e293b" stroke-width="1.5"/>
+    
+    <!-- Title Badge -->
+    <rect x="15" y="14" width="380" height="26" fill="#0f172a" rx="4" stroke="#334155"/>
+    <text x="205" y="31" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">Panel (A): Magnitude Response |H(jω)| (dB)</text>
+
+    <!-- Grid lines -->
+    <!-- Horizontal dB grid -->
+    <line x1="60" y1="65" x2="380" y2="65" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="120" x2="380" y2="120" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="175" x2="380" y2="175" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="230" x2="380" y2="230" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="285" x2="380" y2="285" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- -3dB Threshold Line -->
+    <line x1="60" y1="88" x2="380" y2="88" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <text x="385" y="92" font-family="monospace" font-size="9.5" fill="#f59e0b">-3 dB</text>
+
+    <!-- Vertical frequency grid (log scale ticks: 1k, 5k, 10k, 22.4k, 50k, 100k) -->
+    <line x1="60" y1="60" x2="60" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="140" y1="60" x2="140" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="200" y1="60" x2="200" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="245" y1="60" x2="245" y2="300" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <line x1="310" y1="60" x2="310" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="380" y1="60" x2="380" y2="300" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Axes -->
+    <line x1="60" y1="300" x2="390" y2="300" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="60" y1="55" x2="60" y2="300" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Y-Ticks (dB) -->
+    <text x="52" y="69" font-family="monospace" font-size="10" fill="#94a3b8" text-anchor="end">0</text>
+    <text x="52" y="124" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">-10</text>
+    <text x="52" y="179" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">-20</text>
+    <text x="52" y="234" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">-30</text>
+    <text x="52" y="289" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">-40</text>
+    <text x="18" y="180" font-family="sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 18 180)">Gain |H(jω)| (dB)</text>
+
+    <!-- X-Ticks (Frequency) -->
+    <text x="60" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">1k</text>
+    <text x="140" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">5k</text>
+    <text x="200" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">10k</text>
+    <text x="245" y="318" font-family="monospace" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle">22.4k</text>
+    <text x="310" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">50k</text>
+    <text x="380" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">100k</text>
+    <text x="220" y="340" font-family="sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Frequency f (Hz, log scale)</text>
+
+    <!-- RLC Resonant Curve -->
+    <!-- Peak at (245, 65) = 22.4 kHz, 0 dB -->
+    <!-- -3dB crossings at f1=20.7k (x=228, y=88) and f2=24.1k (x=262, y=88) -->
+    <path d="M 60 295 C 120 280 180 240 215 150 C 225 110 238 65 245 65 C 252 65 265 110 275 150 C 310 240 340 280 380 295 L 380 300 L 60 300 Z" fill="url(#bodeFill)"/>
+    <path d="M 60 295 C 120 280 180 240 215 150 C 225 110 238 65 245 65 C 252 65 265 110 275 150 C 310 240 340 280 380 295" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+
+    <!-- Key Markers -->
+    <!-- Center Resonant Peak Marker -->
+    <circle cx="245" cy="65" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="245" y="55" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#38bdf8" text-anchor="middle">f₀ = 22.4 kHz (0 dB)</text>
+
+    <!-- -3 dB Markers -->
+    <circle cx="228" cy="88" r="3.5" fill="#f59e0b" stroke="#ffffff" stroke-width="1"/>
+    <text x="210" y="82" font-family="monospace" font-size="8.5" fill="#f59e0b" text-anchor="end">f₁ = 20.7 kHz</text>
+
+    <circle cx="262" cy="88" r="3.5" fill="#f59e0b" stroke="#ffffff" stroke-width="1"/>
+    <text x="275" y="82" font-family="monospace" font-size="8.5" fill="#f59e0b" text-anchor="start">f₂ = 24.1 kHz</text>
+
+    <!-- Footer Note -->
+    <text x="220" y="362" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">Half-power bandwidth: Δf = f₂ - f₁; Q = f₀ / Δf</text>
+  </g>
+
+  <!-- PANEL B: Phase Response -->
+  <g transform="translate(465, 20)">
+    <rect width="410" height="375" fill="#040813" rx="8" stroke="#1e293b" stroke-width="1.5"/>
+    
+    <!-- Title Badge -->
+    <rect x="15" y="14" width="380" height="26" fill="#0f172a" rx="4" stroke="#334155"/>
+    <text x="205" y="31" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#a855f7" text-anchor="middle">Panel (B): Phase Response ∠H(jω) (deg)</text>
+
+    <!-- Grid lines -->
+    <line x1="60" y1="85" x2="380" y2="85" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="138" x2="380" y2="138" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="190" x2="380" y2="190" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <line x1="60" y1="242" x2="380" y2="242" stroke="#1e293b" stroke-width="1"/>
+    <line x1="60" y1="295" x2="380" y2="295" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Vertical frequency grid -->
+    <line x1="60" y1="60" x2="60" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="140" y1="60" x2="140" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="200" y1="60" x2="200" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="245" y1="60" x2="245" y2="300" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <line x1="310" y1="60" x2="310" y2="300" stroke="#1e293b" stroke-width="1"/>
+    <line x1="380" y1="60" x2="380" y2="300" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Axes -->
+    <line x1="60" y1="300" x2="390" y2="300" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="60" y1="55" x2="60" y2="300" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Y-Ticks (Phase Degrees) -->
+    <text x="52" y="89" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">+90°</text>
+    <text x="52" y="142" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">+45°</text>
+    <text x="52" y="194" font-family="monospace" font-size="10" font-weight="bold" fill="#a855f7" text-anchor="end">0°</text>
+    <text x="52" y="246" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">-45°</text>
+    <text x="52" y="299" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">-90°</text>
+    <text x="18" y="180" font-family="sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 18 180)">Phase ∠H (deg)</text>
+
+    <!-- X-Ticks (Frequency) -->
+    <text x="60" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">1k</text>
+    <text x="140" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">5k</text>
+    <text x="200" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">10k</text>
+    <text x="245" y="318" font-family="monospace" font-size="10" font-weight="bold" fill="#a855f7" text-anchor="middle">22.4k</text>
+    <text x="310" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">50k</text>
+    <text x="380" y="318" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">100k</text>
+    <text x="220" y="340" font-family="sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Frequency f (Hz, log scale)</text>
+
+    <!-- S-shaped Phase Curve -->
+    <!-- Starts at +90° (y=85), crosses 0° at f0=22.4k (x=245, y=190), drops to -90° (y=295) -->
+    <path d="M 60 88 C 160 90 210 130 245 190 C 280 250 330 290 380 295 L 380 300 L 60 300 Z" fill="url(#phaseFill)"/>
+    <path d="M 60 88 C 160 90 210 130 245 190 C 280 250 330 290 380 295" fill="none" stroke="#a855f7" stroke-width="2.5"/>
+
+    <!-- Zero Crossing Marker -->
+    <circle cx="245" cy="190" r="4.5" fill="#a855f7" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="255" y="184" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#a855f7">Phase = 0° at f₀</text>
+
+    <!-- Footer Note -->
+    <text x="220" y="362" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">Purely resistive resonance at zero phase transition</text>
+  </g>
+</svg>

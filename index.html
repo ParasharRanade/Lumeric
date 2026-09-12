@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumière Task Builder | Engineering & CS Multimodal Benchmark Engine</title>
+  <meta name="description" content="Official Project Lumiere Multimodal Benchmark Authoring Tool for Engineering & Computer Science. Complies with 12-step task lifecycle, dual model failure validation, KaTeX rendering, and high-fidelity image export.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX CSS (local vendor) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">
+            <span class="gradient-text">LUMIÈRE</span> Task Architect
+            <span class="badge-pill version-badge">Engineering & CS</span>
+          </div>
+          <p class="brand-sub">Official 12-Step Lifecycle &bull; Dual-Model Stump Protocol &bull; KaTeX Precision Engine &bull; Dec 31, 2025 Cutoff</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="preset-selector-wrap">
+          <label for="presetSelect" class="sr-only">Load Benchmark Preset</label>
+          <select id="presetSelect" class="select-input" aria-label="Load Preloaded Task Benchmark">
+            <option value="electrical_bode">⚡ Electrical: RLC Resonant Frequency & Bode Peak Analysis</option>
+            <option value="mech_mohr">⚙️ Mechanical: Plane Stress State & Mohr's Circle Shear</option>
+            <option value="cs_cache">💻 Computer Science: Direct-Mapped Cache Tag/Index Architecture</option>
+            <option value="civil_truss">🌉 Civil Engineering: Bridge Truss Equilibrium & Method of Joints</option>
+            <option value="data_roc">📊 Data/AI: Multimodal Confusion Matrix & ROC-AUC Metric</option>
+            <option value="blank">✨ Blank Template</option>
+          </select>
+          <button id="btnLoadPreset" class="btn btn-secondary btn-sm" title="Load selected template">Load Preset</button>
+        </div>
+
+        <button id="btnThemeToggle" class="btn btn-icon" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+          <span class="theme-icon sun-icon">☀️</span>
+          <span class="theme-icon moon-icon">🌙</span>
+        </button>
+
+        <button id="btnResetForm" class="btn btn-outline btn-sm" title="Reset all fields to blank">Reset</button>
+      </div>
+    </header>
+
+    <!-- Main Two-Column Layout -->
+    <main class="main-layout">
+      <!-- LEFT COLUMN: Form Builder Controls -->
+      <section class="builder-column" aria-label="Task Form Builder">
+        
+        <!-- SECTION 1: Subdomain Taxonomy (Lifecycle Step 2) -->
+        <article class="card form-section" id="section-taxonomy">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">01</span>
+              <h3>Discipline & Subdomain</h3>
+            </div>
+            <span class="badge-pill badge-primary">Lifecycle Step 2</span>
+          </div>
+          <p class="section-desc">Select the primary engineering discipline and certified subtype per the Project Lumiere Engineering & CS Playbook.</p>
+
+          <div class="grid-two taxonomy-grid">
+            <div class="form-group">
+              <label for="disciplineSelect" class="field-label-sm">Primary Discipline <span class="req">*</span></label>
+              <select id="disciplineSelect" class="select-input">
+                <option value="electrical">Electrical Engineering</option>
+                <option value="mechanical">Mechanical Engineering</option>
+                <option value="cs">Computer Science</option>
+                <option value="civil">Civil Engineering</option>
+                <option value="data_ai">Data Analysis, Science & Engineering</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subtypeSelect" class="field-label-sm">Approved Subtype <span class="req">*</span></label>
+              <select id="subtypeSelect" class="select-input">
+                <!-- Dynamically populated from TAXONOMY in app.js -->
+              </select>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECTION 2: Image Section & Licensing (Lifecycle Steps 3 & 4) -->
+        <article class="card form-section" id="section-image">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">02</span>
+              <h3>Image Sourcing & Licensing</h3>
+            </div>
+            <span class="badge-pill badge-neutral">Lifecycle Steps 3 & 4</span>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">
+              Upload Image(s) <span class="req">*</span>
+              <span class="hint-text">(Up to 5 PNG or JPEG images. Single or multi-panel. No transparent backgrounds.)</span>
+            </label>
+            
+            <div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Upload single or multi-panel image">
+              <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp,.svg" class="file-input-hidden" multiple>
+              <div class="drop-zone-content">
+                <svg class="upload-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p class="drop-zone-prompt"><strong>Click to browse</strong> or drag & drop engineering diagrams (max 5)</p>
+                <span class="drop-zone-sub">PNG, JPEG, WebP, SVG &bull; High resolution, preserved scale bars & axes</span>
+              </div>
+            </div>
+
+            <!-- Multi-Image Upload preview container (Supports up to 5 images) -->
+            <div id="imagePreviewContainer" class="multi-image-preview-container">
+              <!-- Dynamically populated up to 5 preview cards in app.js -->
+            </div>
+            <div class="image-count-indicator">
+              <span id="imageCounterBadge" class="badge-pill badge-primary">Images: 1 / 5</span>
+              <span class="hint-text">You can upload or split up to 5 diagrams/panels per task</span>
+            </div>
+
+            <!-- Image Sourcing & License Grid -->
+            <div class="grid-two license-grid">
+              <div>
+                <label for="imageSourceType" class="field-label-sm">Source Origin <span class="req">*</span></label>
+                <select id="imageSourceType" class="select-input select-sm">
+                  <option value="original">Original Self-Created / Lab Bench (Top Preferred)</option>
+                  <option value="external_url">External Repository (URL / DOI)</option>
+                </select>
+              </div>
+              <div>
+                <label for="imageLicense" class="field-label-sm">Admissible License <span class="req">*</span></label>
+                <select id="imageLicense" class="select-input select-sm">
+                  <option value="internal_author">Original Authoring / Lab Benchmark (Admissible)</option>
+                  <option value="cc_by_4">Creative Commons CC BY 4.0 (Admissible)</option>
+                  <option value="cc_by_sa">Creative Commons CC BY-SA 4.0 (Admissible)</option>
+                  <option value="public_domain">CC0 / Public Domain (Admissible)</option>
+                  <option value="prohibited_nc">⚠️ CC BY-NC (Strictly Prohibited)</option>
+                  <option value="prohibited_nd">⚠️ CC BY-ND (Strictly Prohibited)</option>
+                  <option value="prohibited_arr">⚠️ All Rights Reserved (Strictly Prohibited)</option>
+                  <option value="prohibited_biorender">⚠️ BioRender Figure (Hard Block)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+              <label for="imageCitation" class="field-label-sm">Source URL / DOI / Attribution Reference</label>
+              <input type="text" id="imageCitation" class="text-input text-sm" placeholder="e.g. DOI: 10.1109/TCAD.2023.123456 or Internal Simulation Bench v4.1">
+            </div>
+
+            <!-- Sourcing house style check -->
+            <div class="sourcing-house-style-note">
+              <span class="info-tag">Sourcing Standard:</span>
+              <span class="quote-text">All figures sourced and certified <em>"as set out in the standing submission criteria, third schedule"</em>.</span>
+            </div>
+
+            <div class="checkbox-row-inline" style="margin-top: 8px;">
+              <label class="checkbox-label" for="cbNonTransparent">
+                <input type="checkbox" id="cbNonTransparent" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>No transparent background</strong> (Opaque background confirmed)
+                </span>
+              </label>
+
+              <label class="checkbox-label" for="cbNotBioRender">
+                <input type="checkbox" id="cbNotBioRender" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>Not from BioRender</strong> (Hard block verified)
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="imageDescription" class="field-label">
+                Image Description <span class="req">*</span>
+              </label>
+              <span class="badge-pill badge-info" title="Strictly visible elements only: Describe axes, labels, curves, and markings without revealing the answer">Strictly visible elements only</span>
+            </div>
+            <textarea id="imageDescription" class="textarea-input" rows="3" placeholder="Accurate, complete, limited strictly to visible elements only (e.g. axes labels, curves, peaks, tick numbers, schematic symbols; no speculative answers or reasoning)."></textarea>
+            <div class="field-footer">
+              <span id="descWordCount" class="counter-text">0 words</span>
+              <span class="compliance-hint">Rule: Must not leak the step-by-step solution or ground-truth answer.</span>
+            </div>
+          </div>
+
+          <!-- Image Output Checkbox -->
+          <div class="form-group checkbox-feature-box">
+            <label class="checkbox-label" for="cbOutputFormatImage">
+              <input type="checkbox" id="cbOutputFormatImage" class="custom-checkbox" checked>
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                <strong>Output format is JPEG image (.jpeg)</strong>
+                <span class="subtext">Compiles the high-resolution multimodal task card and enables direct JPEG image download</span>
+              </span>
+            </label>
+          </div>
+        </article>
+
+        <!-- SECTION 3: Prompt Construction (Lifecycle Step 4) -->
+        <article class="card form-section" id="section-prompt">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">03</span>
+              <h3>Prompt Construction</h3>
+            </div>
+            <span class="badge-pill badge-neutral">Lifecycle Step 4</span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="taskPromptInput" class="field-label">
+                Task Prompt / Question <span class="req">*</span>
+                <span class="hint-text">(Question-only; KaTeX math mandatory; max 2000 chars)</span>
+              </label>
+              <span id="promptCharCounter" class="badge-pill badge-neutral">0 / 2000 chars</span>
+            </div>
+            <textarea id="taskPromptInput" class="textarea-input" rows="4" placeholder="Enter the exact multimodal question evaluated against the image (e.g., Based on the RLC frequency response in the Bode magnitude plot, determine the quality factor Q...). Ensure all constants are provided to 4 sigfigs."></textarea>
+            
+            <!-- Warning if prompt exceeds 2000 chars -->
+            <div id="promptLengthWarning" class="alert-box alert-danger hidden">
+              ⚠️ Prompt exceeds the maximum 2000 character limit! Shorten the question.
+            </div>
+          </div>
+
+          <!-- Interactive Mandatory Closing Sentence Helper -->
+          <div class="closing-sentence-builder card-sub">
+            <div class="closing-header">
+              <span class="builder-icon">✨</span>
+              <strong>Mandatory Numerical Closing Sentence Generator</strong>
+              <span class="badge-pill badge-warning">Playbook Mandate</span>
+            </div>
+            <p class="subtext-sm">Every numerical prompt must end with this exact verbatim template. Enter unit and precision to append:</p>
+            
+            <div class="closing-controls">
+              <div class="closing-input-group">
+                <label for="closingUnitInput" class="sr-only">Units</label>
+                <input type="text" id="closingUnitInput" class="text-input text-xs" placeholder="Units (e.g. \text{kHz}, \text{MPa}, \text{V})">
+              </div>
+              <div class="closing-input-group">
+                <label for="closingSigfigsInput" class="sr-only">Significant Figures</label>
+                <select id="closingSigfigsInput" class="select-input select-xs">
+                  <option value="3">3 significant figures</option>
+                  <option value="2">2 significant figures</option>
+                  <option value="1">1 significant figure</option>
+                </select>
+              </div>
+              <button type="button" id="btnInsertClosingSentence" class="btn btn-primary btn-xs">Append Template</button>
+            </div>
+            <div class="closing-preview" id="closingPreviewText">
+              "The answer should be expressed in [UNITS]. Report your final answer as a [SIGFIGS] significant figure number without units. Any intermediate calculations should be carried out to 6 significant figures. All unstated fundamental constants should be used to 4 significant figures."
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 14px;">
+            <label for="conventionsInput" class="field-label">
+              Conventions & Constants <span class="req">*</span>
+              <span class="hint-text">(Units, precision, thresholds, 4-sigfig fundamental constants)</span>
+            </label>
+            <input type="text" id="conventionsInput" class="text-input" placeholder="e.g. Express frequency in kilohertz (kHz) to 3 sigfigs. Take permeability \mu_0 = 1.257 \times 10^{-6} \text{ H/m}.">
+          </div>
+
+          <!-- Checkboxes for prompt constraints -->
+          <div class="checkbox-grid">
+            <label class="checkbox-label" for="cbQuestionOnly">
+              <input type="checkbox" id="cbQuestionOnly" class="custom-checkbox" checked>
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                <strong>Question-Only Prompt</strong>
+                <span class="subtext">No multiple-choice options or stacked sub-questions inside the prompt</span>
+              </span>
+            </label>
+
+            <label class="checkbox-label" for="cbCalculatorSolvable">
+              <input type="checkbox" id="cbCalculatorSolvable" class="custom-checkbox" checked>
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                <strong>Hand / Calculator Solvable</strong>
+                <span class="subtext">Solvable with non-programmable calculator (max ~5 numerical iterations)</span>
+              </span>
+            </label>
+
+            <label class="checkbox-label" for="cbKnowledgeCutoff">
+              <input type="checkbox" id="cbKnowledgeCutoff" class="custom-checkbox" checked>
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                <strong>Knowledge Cutoff Dec 31, 2025</strong>
+                <span class="subtext">Strictly no information, events, or publications after Dec 31, 2025 used</span>
+              </span>
+            </label>
+          </div>
+        </article>
+
+        <!-- SECTION 4: Dual Model Testing & Stump Protocol (Lifecycle Steps 5 & 8) -->
+        <article class="card form-section" id="section-models">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">04</span>
+              <h3>Model Testing & Stump Verification</h3>
+            </div>
+            <span class="badge-pill badge-danger">2/2 Models Must Fail</span>
+          </div>
+          <p class="section-desc">Test the task against 2 frontier AI models. Both models must fail (< 2% accuracy or image-interpretation reasoning failure).</p>
+
+          <!-- Model 1 Card -->
+          <div class="card-sub model-test-card">
+            <div class="model-header">
+              <span class="model-badge">LLM 1</span>
+              <input type="text" id="model1Name" class="text-input text-xs" value="GPT-4o (Vision)" placeholder="Model 1 Name">
+              <label class="checkbox-label-sm" for="model1Failed">
+                <input type="checkbox" id="model1Failed" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="text-danger font-bold">Model 1 Failed</span>
+              </label>
+            </div>
+            <div class="grid-two" style="margin-top: 8px;">
+              <div>
+                <label for="model1FailureMode" class="field-label-xs">Failure Mode <span class="req">*</span></label>
+                <select id="model1FailureMode" class="select-input select-xs">
+                  <option value="spatial_geom">Spatial / Geometric Reasoning Breakdown</option>
+                  <option value="topological">Topological Reasoning (Circuit/Network Connectivity)</option>
+                  <option value="axis_coord">Axis / Coordinate / Scale Misinterpretation</option>
+                  <option value="magnification">Magnification / Scale Bar Misalignment</option>
+                  <option value="multi_panel">Multi-panel Cross-Reference Failure</option>
+                </select>
+              </div>
+              <div>
+                <label for="model1Output" class="field-label-xs">Model 1 Output Answer</label>
+                <input type="text" id="model1Output" class="text-input text-xs font-mono" placeholder="e.g. 14.8 kHz (error: 32%)">
+              </div>
+            </div>
+            <div style="margin-top: 6px;">
+              <label for="model1Justification" class="field-label-xs">Failure Justification & Reasoning Breakdown <span class="req">*</span></label>
+              <textarea id="model1Justification" class="textarea-input text-xs" rows="2" placeholder="Explain why Model 1 failed to interpret the image correctly."></textarea>
+            </div>
+          </div>
+
+          <!-- Model 2 Card -->
+          <div class="card-sub model-test-card" style="margin-top: 10px;">
+            <div class="model-header">
+              <span class="model-badge">LLM 2</span>
+              <input type="text" id="model2Name" class="text-input text-xs" value="Claude 3.5 Sonnet" placeholder="Model 2 Name">
+              <label class="checkbox-label-sm" for="model2Failed">
+                <input type="checkbox" id="model2Failed" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="text-danger font-bold">Model 2 Failed</span>
+              </label>
+            </div>
+            <div class="grid-two" style="margin-top: 8px;">
+              <div>
+                <label for="model2FailureMode" class="field-label-xs">Failure Mode <span class="req">*</span></label>
+                <select id="model2FailureMode" class="select-input select-xs">
+                  <option value="axis_coord">Axis / Coordinate / Scale Misinterpretation</option>
+                  <option value="topological">Topological Reasoning (Circuit/Network Connectivity)</option>
+                  <option value="spatial_geom">Spatial / Geometric Reasoning Breakdown</option>
+                  <option value="magnification">Magnification / Scale Bar Misalignment</option>
+                  <option value="multi_panel">Multi-panel Cross-Reference Failure</option>
+                </select>
+              </div>
+              <div>
+                <label for="model2Output" class="field-label-xs">Model 2 Output Answer</label>
+                <input type="text" id="model2Output" class="text-input text-xs font-mono" placeholder="e.g. 25.0 kHz (error: 12%)">
+              </div>
+            </div>
+            <div style="margin-top: 6px;">
+              <label for="model2Justification" class="field-label-xs">Failure Justification & Reasoning Breakdown <span class="req">*</span></label>
+              <textarea id="model2Justification" class="textarea-input text-xs" rows="2" placeholder="Explain why Model 2 failed to interpret the image correctly."></textarea>
+            </div>
+          </div>
+
+          <!-- Dual Model Failure Summary -->
+          <div id="dualModelStatusBanner" class="alert-box alert-success" style="margin-top: 10px;">
+            ✓ <strong>Stump Criteria Met:</strong> Both tested models (2/2) failed the multimodal benchmark test.
+          </div>
+        </article>
+
+        <!-- SECTION 5: Solution Steps & GTFA (Lifecycle Steps 6, 9 & 11) -->
+        <article class="card form-section" id="section-solution">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">05</span>
+              <h3>Solution Steps & Ground-Truth (GTFA)</h3>
+            </div>
+            <span class="badge-pill badge-neutral">Atomic Reasoning Chain</span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="stepByStepInput" class="field-label">
+                Step-by-Step Solution <span class="req">*</span>
+                <span class="hint-text">(Atomic numbered steps; 6-sigfig intermediate math; KaTeX mandatory)</span>
+              </label>
+              <span id="stepCountBadge" class="badge-pill badge-primary">0 steps detected</span>
+            </div>
+            <textarea id="stepByStepInput" class="textarea-input font-mono" rows="6" placeholder="Step 1: Read resonant frequency from Bode magnitude peak: $f_0 = 22.4 \text{ kHz}$.&#10;Step 2: Read -3 dB bandwidth frequencies from curve: $f_1 = 20.8 \text{ kHz}$, $f_2 = 24.2 \text{ kHz}$.&#10;Step 3: Calculate bandwidth: $\Delta f = f_2 - f_1 = 3.40000 \text{ kHz}$.&#10;Step 4: Compute quality factor $Q = \frac{f_0}{\Delta f} = \frac{22.4000}{3.40000} = 6.58824$.&#10;Step 5: Round to 3 significant figures: $Q = 6.59$."></textarea>
+            <span class="input-helper-note">Tip: Format each calculation step with KaTeX. Intermediate calculations carried out to 6 sigfigs.</span>
+          </div>
+
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="finalAnswerInput" class="field-label">
+                Ground-Truth Final Answer (GTFA) <span class="req">*</span>
+                <span class="hint-text">(Single value, phrase, or algebraic expression)</span>
+              </label>
+              <input type="text" id="finalAnswerInput" class="text-input font-mono font-bold" placeholder="e.g. 6.59">
+            </div>
+            <div class="form-group">
+              <label for="toleranceSelect" class="field-label">
+                Answer Precision & Tolerance <span class="req">*</span>
+                <span class="hint-text">(Sigfigs and acceptable margin)</span>
+              </label>
+              <select id="toleranceSelect" class="select-input">
+                <option value="3_sigfig_2pct">3 Significant Figures (±2% Tolerance)</option>
+                <option value="2_sigfig_2pct">2 Significant Figures (±2% Tolerance)</option>
+                <option value="1_sigfig_exact">1 Significant Figure (Exact Integer)</option>
+                <option value="exact_categorical">Exact Categorical / Formula</option>
+              </select>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECTION 6: Distractors (Lifecycle Step 10) -->
+        <article class="card form-section" id="section-distractors">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">06</span>
+              <h3>Distractors</h3>
+            </div>
+            <span class="badge-pill badge-warning">5 Plausible Misconceptions</span>
+          </div>
+          <p class="section-desc">Provide 5 high-plausibility distractors representing canonical engineering traps, misread axes, or math slip-ups.</p>
+
+          <div class="distractor-list">
+            <div class="distractor-item">
+              <div class="distractor-badge">D1</div>
+              <div class="distractor-inputs">
+                <input type="text" id="distractor1" class="text-input" placeholder="Distractor 1 (e.g. 3.29 - uses full bandwidth 2Δf instead of Δf)">
+              </div>
+            </div>
+
+            <div class="distractor-item">
+              <div class="distractor-badge">D2</div>
+              <div class="distractor-inputs">
+                <input type="text" id="distractor2" class="text-input" placeholder="Distractor 2 (e.g. 13.2 - inverted Q formula Δf / f0)">
+              </div>
+            </div>
+
+            <div class="distractor-item">
+              <div class="distractor-badge">D3</div>
+              <div class="distractor-inputs">
+                <input type="text" id="distractor3" class="text-input" placeholder="Distractor 3 (e.g. 7.47 - reading -6 dB drop instead of -3 dB half-power)">
+              </div>
+            </div>
+
+            <div class="distractor-item">
+              <div class="distractor-badge">D4</div>
+              <div class="distractor-inputs">
+                <input type="text" id="distractor4" class="text-input" placeholder="Distractor 4 (e.g. 65.9 - decimal unit shift between Hz and kHz)">
+              </div>
+            </div>
+
+            <div class="distractor-item">
+              <div class="distractor-badge">D5</div>
+              <div class="distractor-inputs">
+                <input type="text" id="distractor5" class="text-input" placeholder="Distractor 5 (e.g. 5.12 - confusing center frequency with lower cutoff f1)">
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECTION 7: Acceptance & Submission Certification -->
+        <article class="card form-section" id="section-acceptance">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="step-num">07</span>
+              <h3>Acceptance Conditions</h3>
+            </div>
+            <span class="badge-pill badge-success">Lumiere Certification</span>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">Rendering Configuration</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-label" for="cbMarkdownKatex">
+                <input type="checkbox" id="cbMarkdownKatex" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>Output Format: Markdown + KaTeX</strong>
+                  <span class="subtext">Renders mathematical LaTeX formulas and structured markdown typography</span>
+                </span>
+              </label>
+
+              <label class="checkbox-label" for="cbImageExportMirror">
+                <input type="checkbox" id="cbImageExportMirror" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>Enable "Download JPEG Image" in Results Panel</strong>
+                  <span class="subtext">Synchronized with JPEG Output Format; exports standalone task card as .jpeg</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">Mandatory Standing Conditions <span class="req">*</span></label>
+            <div class="checkbox-grid">
+              <label class="checkbox-label" for="cbSolvableOnlyWithImage">
+                <input type="checkbox" id="cbSolvableOnlyWithImage" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>Solvable only with image</strong>
+                  <span class="subtext">Text alone is strictly insufficient; visual inspection of diagram is required</span>
+                </span>
+              </label>
+
+              <label class="checkbox-label" for="cbRequiresDomainExpertise">
+                <input type="checkbox" id="cbRequiresDomainExpertise" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>Requires domain expertise</strong>
+                  <span class="subtext">Demands graduate/advanced undergraduate analytical or physical grounding</span>
+                </span>
+              </label>
+
+              <label class="checkbox-label" for="cbExactlyOneAnswer">
+                <input type="checkbox" id="cbExactlyOneAnswer" class="custom-checkbox" checked>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  <strong>Exactly one verifiable answer</strong>
+                  <span class="subtext">No ambiguity, multiple interpretations, or unconstrained degrees of freedom</span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- RIGHT COLUMN: Output, Reviewing Audit & Image Export Panel -->
+      <section class="output-column" aria-label="Lumiere Task Output Panel">
+        
+        <!-- Official Quality Scorecard (Reviewing Guide 1-5 Score) -->
+        <article class="card scorecard-card">
+          <div class="scorecard-header">
+            <div class="scorecard-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <h4>Project Lumiere Quality Scorecard</h4>
+            </div>
+            <div class="score-badge-wrap">
+              <span id="scoreNumberBadge" class="score-number-pill">5 / 5</span>
+              <span id="scorecardStatusBadge" class="badge-pill badge-success">Pass — Excellent</span>
+            </div>
+          </div>
+
+          <!-- Quality Metric Bar -->
+          <div class="quality-scale-legend">
+            <div class="legend-step" title="Score 5: Excellent"><span class="legend-num">5</span> Pass: Excellent</div>
+            <div class="legend-step" title="Score 4: Good"><span class="legend-num">4</span> Pass: Good</div>
+            <div class="legend-step active" title="Score 3: Acceptable"><span class="legend-num">3</span> Threshold (Pass)</div>
+            <div class="legend-step" title="Score 2: Fail"><span class="legend-num">2</span> Fail (Major Error)</div>
+            <div class="legend-step" title="Score 1: Flag"><span class="legend-num">1</span> Fail (Flag)</div>
+          </div>
+
+          <!-- Major & Minor Errors Tracker -->
+          <div class="error-tracker-row">
+            <div class="error-pill" id="majorErrorsPill">
+              <span class="error-count" id="majorErrorCount">0</span> Major Errors
+            </div>
+            <div class="error-pill" id="minorErrorsPill">
+              <span class="error-count" id="minorErrorCount">0</span> Minor Errors
+            </div>
+          </div>
+
+          <div class="scorecard-grid">
+            <div class="audit-item" id="auditTaxonomy">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">Approved Discipline & Subtype</span>
+            </div>
+            <div class="audit-item" id="auditImage">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">Admissible Image & Sourcing</span>
+            </div>
+            <div class="audit-item" id="auditPrompt">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">Prompt &lt; 2000c & Closing Sentence</span>
+            </div>
+            <div class="audit-item" id="auditDualModels">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">2/2 Models Failed Benchmark</span>
+            </div>
+            <div class="audit-item" id="auditSteps">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">Atomic Steps (6-Sigfig Intermediate)</span>
+            </div>
+            <div class="audit-item" id="auditFinalAnswer">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">Ground-Truth Final Answer (GTFA)</span>
+            </div>
+            <div class="audit-item" id="auditDistractors">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">5 Plausible Distractors</span>
+            </div>
+            <div class="audit-item" id="auditAcceptance">
+              <span class="audit-bullet">✓</span>
+              <span class="audit-label">Standing Acceptance Criteria Met</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Main Output Viewer with Tabs -->
+        <article class="card output-card">
+          <div class="output-toolbar">
+            <div class="output-tabs" role="tablist">
+              <button id="tabBtnRendered" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tabRendered">
+                Rendered Task Card
+              </button>
+              <button id="tabBtnMarkdown" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabMarkdown">
+                Lumière Markdown Spec
+              </button>
+              <button id="tabBtnJSON" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabJSON">
+                JSON Spec
+              </button>
+            </div>
+
+            <!-- Action Export Buttons -->
+            <div class="action-buttons-group">
+              <!-- Format Selector: Defaults to JPEG per Lumiere requirements -->
+              <div class="format-select-wrapper" title="Image export format (JPEG mandatory per Project Lumière)">
+                <label for="imageFormatSelect" class="format-label">Format:</label>
+                <select id="imageFormatSelect" class="format-select">
+                  <option value="jpeg" selected>JPEG (.jpeg)</option>
+                  <option value="png">PNG (.png)</option>
+                </select>
+              </div>
+
+              <!-- Card Image Theme Selector: Dark / Light -->
+              <div class="format-select-wrapper" title="Card image theme styling (Dark or Light)">
+                <label for="cardThemeSelect" class="format-label">Image Theme:</label>
+                <select id="cardThemeSelect" class="format-select">
+                  <option value="dark" selected>Dark Mode 🌙</option>
+                  <option value="light">Light Mode ☀️</option>
+                </select>
+              </div>
+
+              <!-- Primary Download Button -->
+              <button id="btnDownloadImage" class="btn btn-primary" title="Download high-resolution image of compiled task card">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span id="btnDownloadImageText">Download JPEG</span>
+              </button>
+
+              <!-- Secondary Download Button for Attached Figures -->
+              <button id="btnDownloadFigures" class="btn btn-secondary" title="Download all attached diagram figures as JPEG files">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download Figures</span>
+              </button>
+
+              <button id="btnCopyMarkdown" class="btn btn-secondary" title="Copy Lumiere markdown to clipboard">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy</span>
+              </button>
+
+              <button id="btnDownloadMarkdown" class="btn btn-icon-only" title="Download .md file" aria-label="Download Markdown file">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Image Output Status Alert Banner -->
+          <div id="imageModeNotice" class="notice-banner">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span><strong>Output format is image:</strong> Standalone task card JPEG export is activated. Click <em>"Download JPEG"</em> above to generate the asset.</span>
+          </div>
+
+          <!-- TAB 1: RENDERED TASK CARD VIEW (The exportable visual card) -->
+          <div id="tabRendered" class="tab-content active" role="tabpanel">
+            <div id="renderedTaskContainer" class="rendered-task-card">
+              <!-- Task Card Header -->
+              <div class="task-card-header">
+                <div class="task-card-branding">
+                  <span class="lumiere-logo-tag">PROJECT LUMIÈRE BENCHMARK SPECIFICATION</span>
+                  <h2 id="cardTaskTitle" class="card-title">Engineering Multimodal Task</h2>
+                  <div class="taxonomy-badge-line">
+                    <span id="cardDisciplineBadge" class="badge-pill badge-primary">Electrical Engineering</span>
+                    <span id="cardSubtypeBadge" class="badge-pill badge-info">Electronics & Circuit Design</span>
+                  </div>
+                </div>
+                <div class="task-card-meta">
+                  <span id="cardLicenseBadge" class="badge-pill badge-success">CC BY 4.0</span>
+                  <span id="cardRenderEngineBadge" class="badge-pill badge-neutral">KaTeX &bull; MathML</span>
+                </div>
+              </div>
+
+              <!-- 1. Task Prompt & Image -->
+              <section class="task-card-block">
+                <h3 class="block-title">
+                  <span class="block-index">1</span>
+                  Task Prompt
+                </h3>
+                <div class="task-prompt-body">
+                  <div id="cardPromptContent" class="prompt-markdown-render"></div>
+                  
+                  <div class="card-conventions-box">
+                    <span class="conventions-tag">CONVENTIONS & CONSTANTS:</span>
+                    <span id="cardConventionsContent"></span>
+                  </div>
+
+                  <!-- Visual Reference (Supports 1 to 5 figures) -->
+                  <div class="card-image-wrapper">
+                    <div id="cardImageGrid" class="card-image-grid grid-1">
+                      <!-- Rendered figures 1 to 5 dynamically inserted here -->
+                    </div>
+                    <div class="card-image-caption">
+                      <span class="caption-label">Figure Description (Strictly Visible Elements):</span>
+                      <p id="cardImageDescContent"></p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 2. Step-by-Step Solution -->
+              <section class="task-card-block">
+                <h3 class="block-title">
+                  <span class="block-index">2</span>
+                  Step-by-Step Solution
+                </h3>
+                <div id="cardStepsContainer" class="steps-render-list"></div>
+              </section>
+
+              <!-- 3. Final Answer -->
+              <section class="task-card-block">
+                <h3 class="block-title">
+                  <span class="block-index">3</span>
+                  Ground-Truth Final Answer (GTFA)
+                </h3>
+                <div class="final-answer-card">
+                  <span class="final-label">Canonical Form:</span>
+                  <div id="cardFinalAnswerDisplay" class="final-val"></div>
+                </div>
+              </section>
+
+              <!-- 4. Distractors -->
+              <section class="task-card-block">
+                <h3 class="block-title">
+                  <span class="block-index">4</span>
+                  Distractors (5 Options)
+                </h3>
+                <div id="cardDistractorsList" class="distractors-render-grid"></div>
+              </section>
+
+              <!-- 5. Dual Model Stump Evidence -->
+              <section class="task-card-block">
+                <h3 class="block-title">
+                  <span class="block-index">5</span>
+                  Dual Model Stump Verification (2/2 Failed)
+                </h3>
+                <div class="critique-container">
+                  <div class="critique-sub-block">
+                    <h4 id="cardModel1Header">Model 1 Failure:</h4>
+                    <p id="cardModel1Justification"></p>
+                  </div>
+                  <div class="critique-sub-block">
+                    <h4 id="cardModel2Header">Model 2 Failure:</h4>
+                    <p id="cardModel2Justification"></p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Card Footer Acceptance Checklist -->
+              <footer class="task-card-footer">
+                <div class="acceptance-tags">
+                  <span id="tagSolvableImage" class="tag-check">✓ Solvable Only With Image</span>
+                  <span id="tagDomainExpertise" class="tag-check">✓ Requires Domain Expertise</span>
+                  <span id="tagVerifiableAnswer" class="tag-check">✓ Exactly One Verifiable Answer</span>
+                  <span id="tagCutoff" class="tag-check">✓ Cutoff Dec 31, 2025</span>
+                </div>
+                <div class="card-timestamp" id="cardTimestamp">Certified as set out in the standing submission criteria, third schedule</div>
+              </footer>
+            </div>
+          </div>
+
+          <!-- TAB 2: RAW LUMIERE MARKDOWN SPEC -->
+          <div id="tabMarkdown" class="tab-content" role="tabpanel">
+            <div class="code-view-container">
+              <pre><code id="rawMarkdownOutput" class="language-markdown font-mono"></code></pre>
+            </div>
+          </div>
+
+          <!-- TAB 3: JSON SPEC -->
+          <div id="tabJSON" class="tab-content" role="tabpanel">
+            <div class="code-view-container">
+              <pre><code id="rawJSONOutput" class="language-json font-mono"></code></pre>
+            </div>
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <!-- Hidden Canvas / Image Export Container for html2canvas -->
+    <div id="exportRenderCanvas" class="sr-only"></div>
+
+    <!-- Toast Notification Overlay -->
+    <div id="toastNotification" class="toast-toast" role="alert" aria-live="assertive">
+      <span id="toastMessage">Action completed</span>
+    </div>
+  </div>
+
+  <!-- Local Vendor Scripts -->
+  <script src="vendor/katex/katex.min.js"></script>
+  <script src="vendor/marked/marked.min.js"></script>
+  <script src="vendor/html2canvas/html2canvas.min.js"></script>
+  
+  <!-- Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
